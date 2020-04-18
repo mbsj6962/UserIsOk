@@ -2,7 +2,7 @@ package com.bsj.kyc.service.impl;
 
 import com.bsj.kyc.repository.SelfDeclaredRepository;
 import com.bsj.kyc.service.SelfDeclaredService;
-import com.bsj.kyc.utills.Utillity;
+import com.bsj.kyc.utills.Utility;
 import com.bsj.kyc.model.db.SelfDeclaredInfo;
 import com.bsj.kyc.model.dto.SelfDeclaredDto;
 import com.bsj.kyc.model.type.Status;
@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+/*** @Author By MohamadBiiij@gmail.com ***/
+
 
 @Service
 public class SelfDeclaredServiceImpl implements SelfDeclaredService {
@@ -32,19 +35,19 @@ public class SelfDeclaredServiceImpl implements SelfDeclaredService {
 
     @Override
     public SelfDeclaredInfo personalPicture(MultipartFile file, String nationalCode) throws IOException, NoSuchElementException {
-        Utillity.uploadFile(file, Utillity.generateAddress(file,nationalCode,Address.CUSTOMER_PICTURE.getAddress()));
+        Utility.uploadFile(file, Utility.generateAddress(file,nationalCode,Address.CUSTOMER_PICTURE.getAddress()));
         SelfDeclaredInfo selfDeclaredInfo = selfDeclaredRepository.findByNationalCode(nationalCode).orElseThrow(NoSuchElementException::new);
-        selfDeclaredInfo.setPictureAddress(Utillity.generateAddress(file,nationalCode,Address.CUSTOMER_PICTURE.getAddress()));
+        selfDeclaredInfo.setPictureAddress(Utility.generateAddress(file,nationalCode,Address.CUSTOMER_PICTURE.getAddress()));
         return selfDeclaredRepository.save(selfDeclaredInfo);
     }
 
     @Override
     public SelfDeclaredInfo personalVideo(MultipartFile file, String nationalCode) throws IOException, NoSuchElementException {
-        Utillity.uploadFile(file, Utillity.generateAddress(file,nationalCode,Address.CUSTOMER_VIDEO.getAddress()));
+        Utility.uploadFile(file, Utility.generateAddress(file,nationalCode,Address.CUSTOMER_VIDEO.getAddress()));
         SelfDeclaredInfo selfDeclaredInfo = selfDeclaredRepository.findByNationalCode(nationalCode).orElseThrow(NoSuchElementException::new);
-        selfDeclaredInfo.setVideoAddress(Utillity.generateAddress(file,nationalCode,Address.CUSTOMER_VIDEO.getAddress()));
+        selfDeclaredInfo.setVideoAddress(Utility.generateAddress(file,nationalCode,Address.CUSTOMER_VIDEO.getAddress()));
         selfDeclaredInfo.setStatus(Status.PENDING.getStatus());
-        selfDeclaredInfo.setCreatedDate(Utillity.getCurrentTime());
+        selfDeclaredInfo.setCreatedDate(Utility.getCurrentTime());
         SelfDeclaredInfo selfDeclaredInfo1 = selfDeclaredRepository.save(selfDeclaredInfo);
         return selfDeclaredInfo1;
     }

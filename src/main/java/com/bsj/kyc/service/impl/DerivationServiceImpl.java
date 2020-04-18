@@ -4,8 +4,7 @@ import com.bsj.kyc.model.db.SabtInfo;
 import com.bsj.kyc.repository.SelfDeclaredRepository;
 import com.bsj.kyc.service.DerivationService;
 import com.bsj.kyc.service.SabtInfoService;
-import com.bsj.kyc.utills.Utillity;
-//import com.vsq.kyc.feignClients.SabtClientService;
+import com.bsj.kyc.utills.Utility;
 import com.bsj.kyc.model.db.SelfDeclaredInfo;
 import com.bsj.kyc.model.type.Status;
 import org.slf4j.Logger;
@@ -17,10 +16,11 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
-/**@Author By MohamadBsj6962
-                if you go into any trouble
-                         please contact me mohamadbiiij@gmail.com ***/
+
+/*** @Author By MohamadBiiij@gmail.com ***/
+
 
 
 @Service
@@ -36,7 +36,7 @@ public class DerivationServiceImpl implements DerivationService {
 
     @Override
     @Scheduled(fixedRate = 10000)  /*10 second scheduling*/
-    public void isValid() throws ParseException {
+    public SelfDeclaredInfo isValid() throws ParseException {
 //        codeList.add(callSabtDto.getNationalCode());
 //
 //        ObjectNode uri = objectMapper.createObjectNode();
@@ -62,7 +62,7 @@ public class DerivationServiceImpl implements DerivationService {
 //        String useless = "";
 //        SabtResultDto sabtResultDto = sabtClientService.getInfo();
 //        logger.info("person information fetched from SABT organization {} :" + sabtResultDto);
-        SelfDeclaredInfo selfDeclaredInfo;
+        SelfDeclaredInfo selfDeclaredInfo = new SelfDeclaredInfo();
         SabtInfo sabtInfo;
         List<SelfDeclaredInfo> list = selfDeclaredRepository.findByStatus(Status.PENDING.getStatus());
         for(int i = 0; i< list.size(); i++){
@@ -78,8 +78,20 @@ public class DerivationServiceImpl implements DerivationService {
                 selfDeclaredInfo.setStatus(Status.FAILED.getStatus());
             }
             selfDeclaredRepository.save(selfDeclaredInfo);
-            logger.info("Time is {} :" + Utillity.getCurrentTime());
+            logger.info("Time is {} :" + Utility.getCurrentTime());
         }
+        return selfDeclaredInfo;
     }
 
-}
+     @Override
+     public SelfDeclaredInfo isConfirmed(String nationalCode) {
+
+//        logger.error("ERROR : " + selfDeclaredRepository.findByStatusAndNationalCode(nationalCode).equals(null));
+         Optional<SelfDeclaredInfo> optional = selfDeclaredRepository.findByStatusAndNationalCode(nationalCode);
+        if (optional.get().equals(null)){
+            return optional.orElseThrow(NoSuchElementException::new);
+        }
+         return selfDeclaredRepository.save(optional.get());
+     }
+
+ }

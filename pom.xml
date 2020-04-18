@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bsj.kyc</groupId>
-	<artifactId>kyc</artifactId>
+	<artifactId>bsj.kyc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>KYC</name>
 	<description>Project for Knowing your customers</description>
@@ -76,10 +76,13 @@
 			<artifactId>modelmapper</artifactId>
 			<version>${modelMapper.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<groupId>org.springframework.plugin</groupId>
+			<artifactId>spring-plugin-metadata</artifactId>
+			<version>2.0.0.RELEASE</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

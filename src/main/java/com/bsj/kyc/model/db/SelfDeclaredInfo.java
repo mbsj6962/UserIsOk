@@ -22,14 +22,14 @@ public class SelfDeclaredInfo {
     private Long id;
 
     @Size(max = 65)
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Size(max = 65)
-    @Column(name = "familyName")
+    @Column(name = "family_name", nullable = false)
     private String familyName;
 
-    @Column(name = "nationalCode")
+    @Column(name = "nationalCode", nullable = false)
     private String nationalCode;
 
     @CreatedDate

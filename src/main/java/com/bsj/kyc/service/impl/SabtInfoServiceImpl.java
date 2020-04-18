@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.text.ParseException;
 
+/*** @Author By MohamadBiiij@gmail.com ***/
+
 @Service
 public class SabtInfoServiceImpl implements SabtInfoService {
 
@@ -42,9 +44,5 @@ public class SabtInfoServiceImpl implements SabtInfoService {
         sabtInfo.setBirthdate(sabtResultDto.convertDate(sabtResultDto.getBirthdate()));
         sabtInfo.setPicture(sabtResultDto.getPicture());
         return sbtInfoRepository.save(sabtInfo);
-
     }
-
-
-
 }
