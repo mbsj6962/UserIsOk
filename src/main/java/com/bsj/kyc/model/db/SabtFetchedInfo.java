@@ -9,11 +9,10 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "sabt_fetched_information")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SabtInfo {
+public class SabtFetchedInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

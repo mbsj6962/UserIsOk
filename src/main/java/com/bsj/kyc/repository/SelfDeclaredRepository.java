@@ -13,7 +13,8 @@ public interface SelfDeclaredRepository extends CrudRepository<SelfDeclaredInfo,
         List<SelfDeclaredInfo> findByStatus(String status);
         Optional<SelfDeclaredInfo> findByNationalCode(String nationalCode);
         List<SelfDeclaredInfo> findAll();
-        @Query(value = "select * from self_declared_information where status = 'PENDING' and national_code = :nationalCode",
+//        TODO make it JPQL
+        @Query(value = "select * from self_declared_info where status = 'VERIFIED' and national_code = :nationalCode",
                 nativeQuery = true)
         Optional<SelfDeclaredInfo> findByStatusAndNationalCode(String nationalCode);
 

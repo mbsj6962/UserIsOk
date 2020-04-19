@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "self_declared_information")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

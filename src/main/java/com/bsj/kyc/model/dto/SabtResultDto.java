@@ -15,7 +15,6 @@ public class SabtResultDto {
     private String name, familyName, birthdate, identityNumber, fatherName, livingStatus, identitySerie, identityStatus,
     postalCode, picture;
 
-
     public Date convertDate(String birthdate) throws ParseException {
         return new SimpleDateFormat("yyyy/MM/dd").parse(birthdate);
     }
