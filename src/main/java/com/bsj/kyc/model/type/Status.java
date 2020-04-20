@@ -8,8 +8,8 @@ public enum Status {
 
     PENDING( "PENDING"),
     VERIFIED("VERIFIED"),
-    FAILED("FAILED");
-
+    FAILED("FAILED"),
+    ALIVE("زنده");
     private String status;
 
     Status(String status) {

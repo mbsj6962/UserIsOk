@@ -12,7 +12,7 @@ import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Utillity {
+public class Utility {
 
     public static ResponseEntity call(String uri, HttpMethod method, Object object, Class clazz){
         HttpHeaders headers = new HttpHeaders();

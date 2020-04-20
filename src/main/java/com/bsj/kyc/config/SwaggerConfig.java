@@ -13,6 +13,8 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import com.google.common.base.Predicate;
+
 
 @EnableSwagger2
 @PropertySource("classpath:swagger.properties")
@@ -31,16 +33,17 @@ public class SwaggerConfig {
                 .description(description)
                 .license(LICENSE_TEXT)
                 .version(SWAGGER_API_VERSION)
-                .contact(new Contact("Mohamad Basij", "www.Vosouq.ir", "mohamadbiiij@gmail.com"))
+                .contact(new Contact("Mohamad Basij", "https://github.com/mohamadbasij/KYC", "mohamadbiiij@gmail.com"))
                 .build();
     }
     @Bean
     public Docket kycApi(){
         return new Docket(DocumentationType.SWAGGER_2)
+                .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .pathMapping("/")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.vsq.kyc.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.bsj.kyc.controller"))
                 .paths(PathSelectors.regex("/.*"))
                 .build();
     }
