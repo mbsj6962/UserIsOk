@@ -13,12 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/self-declared")
 @Api(value = "/self-declared", description = "end points for getting data from your customer to see if he's valid or not for this service")
-public class SelfDeclaredController {
+public class SelfDeclaredController extends AbstractController{
 
     private final SelfDeclaredService selfDeclaredService;
 
@@ -33,21 +32,23 @@ public class SelfDeclaredController {
     }
 
     @PostMapping(value = "/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<SelfDeclaredInfo> personalPicture(@RequestParam MultipartFile file,
+    public ResponseEntity<SelfDeclaredInfo> personalPicture(@RequestParam("file") MultipartFile file,
                                                             @RequestParam String nationalCode)
                                                             throws IOException, NoSuchFieldException {
+        checkResourceFound(selfDeclaredService.getInfo(nationalCode));
         return new ResponseEntity(selfDeclaredService.personalPicture(file, nationalCode),HttpStatus.OK);
     }
     @PostMapping(value = "/video", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<SelfDeclaredInfo> personalVideo(@RequestParam MultipartFile file,
+    public ResponseEntity<SelfDeclaredInfo> personalVideo(@RequestParam("file") MultipartFile file,
                                                           @RequestParam String nationalCode)
                                                             throws IOException, NoSuchFieldException {
+        checkResourceFound(selfDeclaredService.getInfo(nationalCode));
         return new ResponseEntity(selfDeclaredService.personalVideo(file, nationalCode),HttpStatus.OK);
     }
 
     @GetMapping("/information")
     @ApiOperation("Gets all information of people who has registered and also for test ;)")
-    private ResponseEntity<List<SelfDeclaredInfo>> getInformation() throws NoSuchElementException {
+    public ResponseEntity<List<SelfDeclaredInfo>> getInformation(){
         return new ResponseEntity(selfDeclaredService.getAllInfo(), HttpStatus.OK);
     }
 }

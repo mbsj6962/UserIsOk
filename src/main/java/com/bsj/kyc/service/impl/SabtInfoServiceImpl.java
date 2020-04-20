@@ -2,8 +2,8 @@ package com.bsj.kyc.service.impl;
 
 import com.bsj.kyc.feignClients.SabtClientService;
 import com.bsj.kyc.model.db.SabtFetchedInfo;
-import com.bsj.kyc.model.dto.SabtResultDto;
 import com.bsj.kyc.repository.SabtFetchedInfoRepository;
+import com.bsj.kyc.model.dto.SabtResultDto;
 import com.bsj.kyc.service.SabtInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

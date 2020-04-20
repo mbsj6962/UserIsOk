@@ -11,4 +11,5 @@ public interface SelfDeclaredService {
     SelfDeclaredInfo personalPicture(MultipartFile file, String nationalCode) throws IOException, NoSuchFieldException;
     SelfDeclaredInfo personalVideo(MultipartFile file, String nationalCode) throws IOException, NoSuchFieldException;
     List<SelfDeclaredInfo> getAllInfo() ;
+    SelfDeclaredInfo getInfo(String nationalCode);
 }
