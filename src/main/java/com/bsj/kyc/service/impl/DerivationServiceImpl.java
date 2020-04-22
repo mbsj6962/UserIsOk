@@ -9,7 +9,6 @@ import com.bsj.kyc.utills.Utility;
 import com.bsj.kyc.repository.SelfDeclaredRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +33,7 @@ public class DerivationServiceImpl implements DerivationService {
     }
 
     @Override
-    @Scheduled(fixedRate = 10000)  /*10 second scheduling*/
+//    @Scheduled(fixedRate = 10000)  /*10 second scheduling*/
     public SelfDeclaredInfo isValid() throws ParseException {
     //        codeList.add(callSabtDto.getNationalCode());
 //
@@ -64,21 +63,20 @@ public class DerivationServiceImpl implements DerivationService {
         SelfDeclaredInfo selfDeclaredInfo = new SelfDeclaredInfo();
         SabtFetchedInfo sabtInfo;
         List<SelfDeclaredInfo> list = selfDeclaredRepository.findByStatus(Status.PENDING.getStatus());
-        for(int i = 0; i< list.size(); i++){
-            sabtInfo = sabtInfoService.fetchInfo(list.get(i).getNationalCode());
-            if(sabtInfo.getName().equals(list.get(i).getName()) &&
-               sabtInfo.getFamilyName().equals(list.get(i).getFamilyName()) &&
-                sabtInfo.getLivingStatus().equals(Status.ALIVE.getStatus())){
-                selfDeclaredInfo = selfDeclaredRepository.findByNationalCode(list.get(i).getNationalCode()).orElseThrow(NoSuchElementException::new);
+        for(SelfDeclaredInfo listItem : list){
+            sabtInfo = sabtInfoService.fetchInfo(listItem.getNationalCode());
+            selfDeclaredInfo = selfDeclaredRepository.findByNationalCode(listItem.getNationalCode()).orElseThrow(NoSuchElementException::new);
+            if(sabtInfo.getName().equals(listItem.getName()) &&
+                    sabtInfo.getFamilyName().equals(listItem.getFamilyName()) &&
+                    sabtInfo.getLivingStatus().equals(Status.ALIVE.getStatus())){
                 selfDeclaredInfo.setStatus(Status.VERIFIED.getStatus());
-            }
-            else {
-                selfDeclaredInfo = selfDeclaredRepository.findByNationalCode(list.get(i).getNationalCode()).orElseThrow(NoSuchElementException::new);
+            } else {
                 selfDeclaredInfo.setStatus(Status.FAILED.getStatus());
             }
             selfDeclaredRepository.save(selfDeclaredInfo);
             logger.info("Time is {} :" + Utility.getCurrentTime());
         }
+
         return selfDeclaredInfo;
     }
 

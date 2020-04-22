@@ -1,6 +1,7 @@
 package com.bsj.kyc.controller;
 
 import com.bsj.kyc.model.db.SelfDeclaredInfo;
+import com.bsj.kyc.events.SelfDeclaredInfoEvent;
 import com.bsj.kyc.model.dto.SelfDeclaredDto;
 import com.bsj.kyc.service.SelfDeclaredService;
 import io.swagger.annotations.Api;
@@ -27,8 +28,12 @@ public class SelfDeclaredController extends AbstractController{
 
     @PostMapping("/info")
     public SelfDeclaredInfo personalInfo(@RequestBody SelfDeclaredDto selfDeclaredDto){
-        return selfDeclaredService.personalInfo(selfDeclaredDto.getName(),
+        SelfDeclaredInfo selfDeclaredInfo = selfDeclaredService.personalInfo(selfDeclaredDto.getName(),
                 selfDeclaredDto.getFamilyName(), selfDeclaredDto.getNationalCode());
+        SelfDeclaredInfoEvent event =
+                new SelfDeclaredInfoEvent("one person has been added : " , selfDeclaredInfo);
+        eventPublisher.publishEvent(event);
+        return selfDeclaredInfo;
     }
 
     @PostMapping(value = "/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -43,7 +48,11 @@ public class SelfDeclaredController extends AbstractController{
                                                           @RequestParam String nationalCode)
                                                             throws IOException, NoSuchFieldException {
         checkResourceFound(selfDeclaredService.getInfo(nationalCode));
-        return new ResponseEntity(selfDeclaredService.personalVideo(file, nationalCode),HttpStatus.OK);
+        SelfDeclaredInfo selfDeclaredInfo = selfDeclaredService.personalVideo(file, nationalCode);
+        SelfDeclaredInfoEvent event =
+                new SelfDeclaredInfoEvent("one person has been added successfully : " , selfDeclaredInfo);
+        eventPublisher.publishEvent(event);
+        return new ResponseEntity(selfDeclaredInfo , HttpStatus.OK);
     }
 
     @GetMapping("/information")

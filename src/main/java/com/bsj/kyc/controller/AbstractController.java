@@ -21,11 +21,11 @@ public abstract class AbstractController implements ApplicationEventPublisherAwa
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected ApplicationEventPublisher eventPublisher;
-    protected static final String DEFAULT_PAGE_SIZE = "20";
-    protected static final String DEFAULT_PAGE_NUMBER = "0";
+//    protected static final String DEFAULT_PAGE_SIZE = "20";
+//    protected static final String DEFAULT_PAGE_NUMBER = "0";
 
-    Counter http400ExceptionCounter = Metrics.counter("com.bsj.SelfDeclaredController.HTTP400");
-    Counter http404ExceptionCounter = Metrics.counter("com.bsj.SelfDeclaredController.HTTP404");
+    Counter http400ExceptionCounter = Metrics.counter("com.vsq.SelfDeclaredController.HTTP400");
+    Counter http404ExceptionCounter = Metrics.counter("com.vsq.SelfDeclaredController.HTTP404");
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HTTP400Exception.class)

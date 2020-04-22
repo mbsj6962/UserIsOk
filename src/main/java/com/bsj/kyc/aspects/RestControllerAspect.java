@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class RestControllerAspect {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    Counter registeredPerson = Metrics.counter("com.vsq.selfDeclaredInfo.created");
+    Counter registeredPerson = Metrics.counter("com.bsj.selfDeclaredInfo.created");
 
     @Before("execution(public * com.bsj.kyc.controller.*Controller.*(..))")
     public void generalAllMethodAspect(){
@@ -23,7 +23,7 @@ public class RestControllerAspect {
 
     @AfterReturning("execution(public * com.bsj.kyc.controller.*Controller.personalVideo(..))")
     public void getCallOnPersonRegistration(){
-        logger.info("This aspect is fired when the save method of controller is called");
+        logger.info("This aspect is fired when the personalVide method of controller is called");
         registeredPerson.increment();
     }
 
