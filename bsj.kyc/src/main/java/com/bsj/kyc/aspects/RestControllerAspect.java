@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 public class RestControllerAspect {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    Counter registeredPerson = Metrics.counter("com.bsj.selfDeclaredInfo.created");
+    Counter registeredPerson = Metrics.counter("com.vsq.selfDeclaredInfo.created");
 
-    @Before("execution(public * com.bsj.kyc.controller.*Controller.*(..))")
+    @Before("execution(public * com.vsq.kyc.controller.*Controller.*(..))")
     public void generalAllMethodAspect(){
         logger.info("All Method Call invoke this general aspect");
     }
 
-    @AfterReturning("execution(public * com.bsj.kyc.controller.*Controller.personalVideo(..))")
+    @AfterReturning("execution(public * com.vsq.kyc.controller.*Controller.personalVideo(..))")
     public void getCallOnPersonRegistration(){
         logger.info("This aspect is fired when the personalVide method of controller is called");
         registeredPerson.increment();

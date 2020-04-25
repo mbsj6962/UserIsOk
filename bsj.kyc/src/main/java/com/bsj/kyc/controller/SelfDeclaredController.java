@@ -12,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.io.IOException;
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/self-declared")
 @Api(value = "/self-declared", description = "end points for getting data from your customer to see if he's valid or not for this service")
@@ -30,6 +30,7 @@ public class SelfDeclaredController extends AbstractController{
     public SelfDeclaredInfo personalInfo(@RequestBody SelfDeclaredDto selfDeclaredDto){
         SelfDeclaredInfo selfDeclaredInfo = selfDeclaredService.personalInfo(selfDeclaredDto.getName(),
                 selfDeclaredDto.getFamilyName(), selfDeclaredDto.getNationalCode());
+
         SelfDeclaredInfoEvent event =
                 new SelfDeclaredInfoEvent("one person has been added : " , selfDeclaredInfo);
         eventPublisher.publishEvent(event);

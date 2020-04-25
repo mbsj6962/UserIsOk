@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
-
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.Aware;
 
 public abstract class AbstractController implements ApplicationEventPublisherAware {
 
@@ -24,13 +23,12 @@ public abstract class AbstractController implements ApplicationEventPublisherAwa
 //    protected static final String DEFAULT_PAGE_SIZE = "20";
 //    protected static final String DEFAULT_PAGE_NUMBER = "0";
 
-    Counter http400ExceptionCounter = Metrics.counter("com.vsq.SelfDeclaredController.HTTP400");
-    Counter http404ExceptionCounter = Metrics.counter("com.vsq.SelfDeclaredController.HTTP404");
+    Counter http400ExceptionCounter = Metrics.counter("com.bsj.SelfDeclaredController.HTTP400");
+    Counter http404ExceptionCounter = Metrics.counter("com.bsj.SelfDeclaredController.HTTP404");
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HTTP400Exception.class)
-    public @ResponseBody RestAPIExceptionInfo handleBadRequestException(HTTP400Exception ex, WebRequest request,
-                                                         HttpServletResponse response){
+    public @ResponseBody RestAPIExceptionInfo handleBadRequestException(HTTP400Exception ex, WebRequest request){
         logger.info("Received Data Store Exception" + ex.getLocalizedMessage());
         http400ExceptionCounter.increment();
         return new RestAPIExceptionInfo(ex.getLocalizedMessage(),"The Request did not have correct parameters");
@@ -38,8 +36,7 @@ public abstract class AbstractController implements ApplicationEventPublisherAwa
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(HTTP404Exception.class)
-    public @ResponseBody RestAPIExceptionInfo handleResourceNotFoundException(HTTP404Exception ex, WebRequest request,
-                                                                       HttpServletResponse response){
+    public @ResponseBody RestAPIExceptionInfo handleResourceNotFoundException(HTTP404Exception ex, WebRequest request){
         logger.info("Received Data Resource Not Found Exception" + ex.getLocalizedMessage());
         http404ExceptionCounter.increment();
         return new RestAPIExceptionInfo(ex.getLocalizedMessage(),"The Requested resource was not found  ");
