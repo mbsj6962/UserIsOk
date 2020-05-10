@@ -11,7 +11,7 @@ today we start a journey to have module to ensure that your customer is valid pe
 let's start!!!
 
 
-clone project : $ git clone https://github.com/mohamadbasij/KYC.git
+clone project : $ git clone https://github.com/mohamadbasij/UserIsOk.git
 
 
 open it with IDE 
